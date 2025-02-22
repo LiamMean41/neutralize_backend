@@ -29,3 +29,6 @@ class TokenData(BaseModel):
 class BiasRequest(BaseModel):
     text: str
     bias_level: dict
+    
+class TextRequest(BaseModel):
+    text: str
