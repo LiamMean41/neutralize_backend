@@ -5,3 +5,6 @@ __pycache__/
 .env
 
 .DS_store
+
+database/*.db
+database/*.db-journal
