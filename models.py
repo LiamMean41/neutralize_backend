@@ -13,7 +13,7 @@ Users = Table('Users', meta,
 )
 
 Cache = Table('cache', meta,
-    Column('url', String, primay_key=True),
+    Column('url', String, primary_key=True),
     Column('title', String),
     Column('text', String),
 )

@@ -3,7 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from CRUD.authen import auth
 import uvicorn
 import colorama
-from neutralize.neutralize import neu
+# from neutralize.neutralize import neu
+from neutralize.neutralize_not_enc import neu
+# from database import cache
+from db.url_cache import cache
 
 colorama.init()
 origins = [
@@ -22,5 +25,6 @@ app.add_middleware(
 )
 app.include_router(auth, prefix="/api")
 app.include_router(neu, prefix="/api")
+app.include_router(cache, prefix="/api")
 
 if __name__ == "__main__": uvicorn.run("server:app", host="localhost", reload=True, port=9999)

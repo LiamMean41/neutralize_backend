@@ -6,5 +6,5 @@ __pycache__/
 
 .DS_store
 
-database/*.db
-database/*.db-journal
+db/*.db
+db/*.db-journal

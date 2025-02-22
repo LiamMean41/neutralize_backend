@@ -1,18 +1,10 @@
 import sqlalchemy as _sql
 import sqlalchemy.orm as _orm
-from fastapi import FastAPI, Depends
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from sqlalchemy import Table, Column, Text, MetaData, select
 from sqlalchemy.orm import sessionmaker
-
-
-DATABASE_URL = "sqlite:///database/SQLite.db"
-
-engine = _sql.create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
-
-SessionLocal = _orm.sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-conn = engine.connect()
+from database import conn, engine, SessionLocal
 
 metadata = MetaData()
 
@@ -27,8 +19,8 @@ website_cache = Table(
 # Create the table if it doesn't exist
 metadata.create_all(engine)
 
-# Initialize FastAPI
-app = FastAPI()
+# Initialize API router
+cache = APIRouter()
 
 # Request model
 class CacheRequest(BaseModel):
@@ -44,7 +36,7 @@ def get_db():
     finally:
         db.close()
 
-@app.post("/cache")
+@cache.post("/cache")
 async def check_and_insert_cache(request: CacheRequest, db=Depends(get_db)):
     """Checks if the URL exists in the cache. If not, inserts it."""
     

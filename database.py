@@ -1,7 +1,7 @@
 import sqlalchemy as _sql
 import sqlalchemy.orm as _orm
 
-DATABASE_URL = "sqlite:///database/SQLite.db"
+DATABASE_URL = "sqlite:///db/SQLite.db"
 
 engine = _sql.create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 
