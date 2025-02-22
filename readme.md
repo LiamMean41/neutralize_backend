@@ -111,7 +111,7 @@ Neutralize is a web application designed to analyze and neutralize political bia
 
 - **Caching intergration for websites visited**:
     - `POST /api/cache`
-    - Request body: [CacheRequest]
+    - Request body: [CacheRequest](http://_vscodecontentref_/10) schema
     - Response: URL, Title and Text are added into table Cache
 
 ## Technologies
