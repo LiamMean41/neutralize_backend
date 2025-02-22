@@ -1,14 +1,15 @@
 from fastapi import FastAPI, HTTPException
+from fastapi import APIRouter
 from pydantic import BaseModel
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import torch
 
-from schemas import BiasRequest
+from schemas import BiasRequest, TextRequest
 
 neu = APIRouter()
 
-@neu.post("/analyze_bias")
-def analyze_bias_endpoint(request: BiasRequest):
+@neu.post("/gpt_analyze/")
+async def analyze_bias_endpoint(request: BiasRequest):
     try:
         explanation = analyze_bias(request.text, request.bias_level)
         return {"explanation": explanation}
@@ -23,7 +24,7 @@ model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME)
 async def analyze_bias(request: TextRequest):
     try:
         inputs = tokenizer(request.text, return_tensors="pt")
-        with torch.no_grad():@neu.post("/test_analyze_bias")
+        with torch.no_grad():
             logits = model(**inputs).logits
             probabilities = logits.softmax(dim=-1)[0].tolist()
 
