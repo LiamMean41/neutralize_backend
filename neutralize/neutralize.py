@@ -1,28 +1,24 @@
-from fastapi import FastAPI, HTTPException
-from fastapi import APIRouter
-from pydantic import BaseModel
+from fastapi import Depends
+from service.oauth import get_current_user
+from schemas import User, BiasRequest, TextRequest
+from fastapi import HTTPException
+from neutralize.GPT import GPT_ana
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import torch
-from neutralize.GPT.work import GPT_ana
-
-from schemas import BiasRequest, TextRequest
+from fastapi import APIRouter
 
 neu = APIRouter()
 
 @neu.post("/gpt_analyze/")
-async def analyze_bias_endpoint(request: BiasRequest):
+async def analyze_bias_endpoint(request: BiasRequest, current_user: User = Depends(get_current_user)):
     try:
         explanation = GPT_ana(request.text, request.bias_level)
         return {"explanation": explanation}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
-MODEL_NAME = "bucketresearch/politicalBiasBERT"
-tokenizer = AutoTokenizer.from_pretrained("bert-base-cased")
-model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME)
 
 @neu.post("/analyze/")
-async def analyze_bias(request: TextRequest):
+async def analyze_bias(request: TextRequest, current_user: User = Depends(get_current_user)):
     try:
         inputs = tokenizer(request.text, return_tensors="pt")
         with torch.no_grad():
@@ -36,11 +32,8 @@ async def analyze_bias(request: TextRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# Integrated API
-# NLP + GPT
-# Endpoint: /analyze_mult/
 @neu.post("/analyze_mult/")
-async def analyze_bias(request: TextRequest):
+async def analyze_bias(request: TextRequest, current_user: User = Depends(get_current_user)):
     try:
         # Analyze bias using PoliticalBiasBERT
         inputs = tokenizer(request.text, return_tensors="pt")

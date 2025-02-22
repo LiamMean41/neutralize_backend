@@ -2,4 +2,9 @@ __pycache__/
 *.pyc
 *.pyo
 
+.env
+
 .DS_store
+
+database/*.db
+database/*.db-journal
