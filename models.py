@@ -12,4 +12,10 @@ Users = Table('Users', meta,
     Column('password', String),
 )
 
+Cache = Table('cache', meta,
+    Column('url', String, primay_key=True),
+    Column('title', String),
+    Column('text', String),
+)
+
 meta.create_all(engine)
