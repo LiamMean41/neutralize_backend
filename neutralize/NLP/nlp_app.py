@@ -8,8 +8,8 @@ import os
 client = TestClient(app)
 
 # Define file paths
-TEST_FILE = "test_input.json"
-OUTPUT_FILE = "output.json"
+TEST_FILE = "../../test/test_input.json"
+OUTPUT_FILE = "../../test/output.json"
 
 def test_analyze_bias():
     # Ensure the input file exists
