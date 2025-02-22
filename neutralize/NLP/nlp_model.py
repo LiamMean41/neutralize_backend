@@ -19,7 +19,7 @@ class TextRequest(BaseModel):
 @app.post("/analyze/")
 async def analyze_bias(request: TextRequest):
     try:
-        inputs = tokenizer(request.text, return_tensors="pt")
+        inputs = tokenizer(request.text, return_tensors="pt", truncation=True, max_length=512)
         with torch.no_grad():
             logits = model(**inputs).logits
             probabilities = logits.softmax(dim=-1)[0].tolist()
