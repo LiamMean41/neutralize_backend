@@ -57,8 +57,12 @@ def login(req: OAuth2PasswordRequestForm = Depends()):
     access_token = create_access_token(data={"username": user[1], "email": user[2], "is_superuser": user[3]})
     return {"access_token": access_token, "token_type": "bearer", "id": user[0]}
 
-@auth.get("/verify_token", response_model=UserResponse)
-def read_root(current_user: User = Depends(get_current_user)):
+# @auth.get("/verify_token", response_model=UserResponse)
+# def read_root(current_user: User = Depends(get_current_user)):
+#     return current_user
+
+@auth.get("/verify_token")
+def read_root(current_user:User = Depends(get_current_user)):
     return current_user
 
 @auth.patch("/change_superuser/{id}", response_model=list[UserResponse])
