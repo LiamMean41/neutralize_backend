@@ -24,7 +24,7 @@ async def analyze_bias(request: TextRequest):
             logits = model(**inputs).logits
             probabilities = logits.softmax(dim=-1)[0].tolist()
 
-        categories = ["Left", "Center", "Right"]
+        categories = ["Left", "Middle", "Right"]
         bias_result = {categories[i]: probabilities[i] for i in range(len(categories))}
 
         return {"bias_analysis": bias_result}

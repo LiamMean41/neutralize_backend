@@ -1,7 +1,14 @@
-import openai
+from openai import OpenAI
+
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+# OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # Function to analyze text bias
-def analyze_bias(text, bias_level):
+def GPT_ana(text, bias_level):
     """
     Analyze the text and determine why it is biased.
 
@@ -12,16 +19,23 @@ def analyze_bias(text, bias_level):
     Returns:
     str: Explanation of why the text is biased.
     """
+    # Validate bias_level keys
+    required_keys = ['Left', 'Middle', 'Right']
+    for key in required_keys:
+        if key not in bias_level:
+            raise ValueError(f"Missing key '{key}' in bias_level dictionary")
+
     # Prepare the prompt for ChatGPT
     prompt = f"Analyze the following text and explain why it is biased:\n\n{text}\n\nBias levels:\nLeft: {bias_level['Left']}\nMiddle: {bias_level['Middle']}\nRight: {bias_level['Right']}\n\nExplanation:"
 
     # Call the OpenAI API
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=prompt,
-        max_tokens=150
-    )
+    response = client.chat.completions.create(model="gpt-3.5-turbo",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": prompt}
+    ],
+    max_tokens=150)
 
     # Extract the explanation from the response
-    explanation = response.choices[0].text.strip()
+    explanation = response.choices[0].message.content.strip()
     return explanation
