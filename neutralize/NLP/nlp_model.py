@@ -32,3 +32,14 @@ async def analyze_bias(request: TextRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 # Run using: uvicorn nlp_model:app --reload
+
+def NLP_ana(text):
+    inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=512)
+    with torch.no_grad():
+        logits = model(**inputs).logits
+        probabilities = logits.softmax(dim=-1)[0].tolist()
+
+    categories = ["Left", "Middle", "Right"]
+    bias_result = {categories[i]: probabilities[i] for i in range(len(categories))}
+
+    return bias_result
