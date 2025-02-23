@@ -8,3 +8,5 @@ __pycache__/
 
 db/*.db
 db/*.db-journal
+
+uploaded_images/
