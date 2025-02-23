@@ -10,6 +10,7 @@ Users = Table('Users', meta,
     Column('email', String),
     Column('is_superuser',Boolean),
     Column('password', String),
+    Column('credits', String),
 )
 
 Cache = Table('cache', meta,

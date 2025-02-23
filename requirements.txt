@@ -11,3 +11,4 @@ SQLAlchemy==2.0.38
 torch==2.6.0
 transformers==4.49.0
 uvicorn==0.34.0
+stripe==11.5.0

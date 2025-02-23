@@ -1,13 +1,10 @@
-from fastapi import Depends
+from fastapi import Depends, HTTPException, APIRouter
 from service.oauth import get_current_user
 from schemas import User, BiasRequest, TextRequest
-from fastapi import HTTPException
 from neutralize.GPT import GPT_ana
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import torch
 import requests
-from fastapi import APIRouter
-
 
 CACHE_API_URL = "http://localhost:8000/api/cache"
 
