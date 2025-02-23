@@ -26,7 +26,7 @@ def GPT_ana(text, bias_level):
             raise ValueError(f"Missing key '{key}' in bias_level dictionary")
 
     # Prepare the prompt for ChatGPT
-    prompt = f"Analyze the following text and explain why it is biased:\n\n{text}\n\nBias levels:\nLeft: {bias_level['Left']}\nMiddle: {bias_level['Middle']}\nRight: {bias_level['Right']}\n\nExplanation:"
+    prompt = f"Analyze the following text and explain why it is biased:\n\n{text}\n\nBias levels:\nLeft: {bias_level['Left']}\nMiddle: {bias_level['Middle']}\nRight: {bias_level['Right']}\n\nWrite in markdown\n\nExplanation:"
 
     # Call the OpenAI API
     response = client.chat.completions.create(model="gpt-3.5-turbo",
