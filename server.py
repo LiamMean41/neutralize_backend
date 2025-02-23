@@ -19,6 +19,7 @@ app = FastAPI(docs_url="/api/docs", openapi_url="/api")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    # allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -27,4 +28,6 @@ app.include_router(auth, prefix="/api")
 app.include_router(neu, prefix="/api")
 app.include_router(cache, prefix="/api")
 
-if __name__ == "__main__": uvicorn.run("server:app", host="localhost", reload=True, port=9999)
+# if __name__ == "__main__": uvicorn.run("server:app", host="localhost", reload=True, port=9999)
+
+if __name__ == "__main__": uvicorn.run("server:app", host="::", reload=True, port=8000)

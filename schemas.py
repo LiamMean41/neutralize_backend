@@ -32,3 +32,8 @@ class BiasRequest(BaseModel):
     
 class TextRequest(BaseModel):
     text: str
+
+class NeuReason(BaseModel):
+    text: str
+    image_path: str
+    # bias_level: str
